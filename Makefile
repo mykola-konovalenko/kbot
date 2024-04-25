@@ -28,6 +28,7 @@ push:
 	docker push ${REGESTRY}/${APP}:${VERSION}-${TARGETARCH}
 
 clean:
+	docker rm $(shell docker ps -aq)
 	rm -rf kbot
 	docker rmi ${IMAGE_TAG}
 		
