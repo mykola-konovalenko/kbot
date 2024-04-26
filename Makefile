@@ -3,6 +3,7 @@ REGESTRY=mykolakonovalenko
 VERSION:=$(shell git describe --tags --abbrev=0)-$(shell git rev-parse --short HEAD)
 TARGETOS=linux
 TARGETARCH=${shell dpkg --print-architecture}
+CONTAINER_ID=${shell docker ps -aq}
 IMAGE_TAG=$(shell docker images -q)
 
 
@@ -28,8 +29,8 @@ push:
 	docker push ${REGESTRY}/${APP}:${VERSION}-${TARGETARCH}
 
 clean:
-	docker stop $(shell docker ps -aq)
-	docker rm $(shell docker ps -aq)
+	docker stop $(CONTAINER_ID)
+	docker rm $(CONTAINER_ID)
 	docker rmi ${IMAGE_TAG}
 	rm -rf kbot
 		
